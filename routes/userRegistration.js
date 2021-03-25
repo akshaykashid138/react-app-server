@@ -26,7 +26,7 @@ router.post('/registration',async (req,res)=>{
     {
         console.log("executed")
         var mailOptions = {
-                                from: 'eduforumdevs@gmail.com',
+                                from: 'akshaykashid138@gmail.com',
                                 to: req.body.email,
                                 subject: 'Registration Mail',
                                 text: 'Registered successfully'
@@ -59,7 +59,7 @@ router.post('/login',async (req,res)=>{
             {
                 
                 var mailOptions = {
-                                        from: 'eduforumdevs@gmail.com',
+                                        from: 'akshaykashid138@gmail.com',
                                         to: user.email,
                                         subject: 'Login Mail',
                                         text: 'You are logged in'
