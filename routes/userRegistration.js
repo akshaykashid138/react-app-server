@@ -86,7 +86,7 @@ async function loggedInMail(email) {
 }
 
 //registering mail
-async function loggedInMail(email) {
+async function registrationMail(email) {
     // console.log(name)
     let transporter = nodemailer.createTransport({
         service: "gmail",
