@@ -35,7 +35,8 @@ router.post('/registration',async (req,res)=>{
 
 //user login
 router.post('/login',async (req,res)=>{
-    let user= await User.findOne({email:req.body.email})
+    try{
+        let user= await User.findOne({email:req.body.email})
     
     if(user){
         let isPasswordMatched = await bcrypt.compare(req.body.password, user.password)
@@ -50,7 +51,11 @@ router.post('/login',async (req,res)=>{
         }
     }else{
         return  res.status(200).json({message:"Invalid Email or Password"})
-    }   
+    }  
+    }catch(error){
+        console.log(error)
+    }
+     
 })
 
 
