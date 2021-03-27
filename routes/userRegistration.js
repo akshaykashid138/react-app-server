@@ -2,7 +2,6 @@ const express=require('express')
 const User=require('../models/userRegistration')
 const bcrypt=require('bcrypt')
 const dotenv=require('dotenv')
-// const transporter=require('../lib/mailer')
 const nodemailer =require('nodemailer')
 const Mail = require('nodemailer/lib/mailer');
 
@@ -15,7 +14,7 @@ router.get('/',async (req,res)=>{
 })
 
 //user Registration
-router.post('/',async (req,res)=>{
+router.post('/registration',async (req,res)=>{
     let user= await User.findOne({email:req.body.email})
     
     if(user) return res.status(200).json({message:"user already registered!"})
