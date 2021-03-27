@@ -1,8 +1,12 @@
 const express=require('express')
 const User=require('../models/userRegistration')
 const bcrypt=require('bcrypt')
-const transporter=require('../lib/mailer')
+const dotenv=require('dotenv')
+// const transporter=require('../lib/mailer')
+const nodemailer =require('nodemailer')
+const Mail = require('nodemailer/lib/mailer');
 
+dotenv.config()
 const router=express.Router()
 
 router.get('/',async (req,res)=>{
@@ -24,21 +28,7 @@ router.post('/registration',async (req,res)=>{
      newUser.save()
     res.status(200).json({success:"user created successfully"})
     {
-        console.log("executed")
-        var mailOptions = {
-                                from: 'akshaykashid138@gmail.com',
-                                to: req.body.email,
-                                subject: 'Registration Mail',
-                                text: 'Registered successfully'
-                          };
-
-                    transporter.sendMail(mailOptions, function(error, info){
-                    if (error) {
-                    console.log(error);
-                    } else {
-                    console.log('Email sent: ' + info.response);
-                    }
-                    });
+        registrationMail(req.body.email)
          res.sendStatus(201);
     }
 })
@@ -56,28 +46,73 @@ router.post('/login',async (req,res)=>{
         }
         else {
             res.status(200).json({success:"Login Sucessfull"})
-            {
-                
-                var mailOptions = {
-                                        from: 'akshaykashid138@gmail.com',
-                                        to: user.email,
-                                        subject: 'Login Mail',
-                                        text: 'You are logged in'
-                                  };
-        
-                            transporter.sendMail(mailOptions, function(error, info){
-                            if (error) {
-                            console.log("error....",error);
-                            } else {
-                            console.log('Email sent: ' + info.response);
-                            }
-                            });
-                 res.sendStatus(201);
-            }
+            loggedInMail(user.email)
         }
     }else{
         return  res.status(200).json({message:"Invalid Email or Password"})
     }   
 })
 
+
+//login mail
+async function loggedInMail(email) {
+    // console.log(name)
+    let transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+            user: process.env.EMAIL, // generated ethereal user
+            pass: process.env.PASS, // generated ethereal password
+        },
+    });
+
+    // send mail with defined transport object
+    let info = await transporter.sendMail({
+        from: process.env.EMAIL, // sender address
+        to: email, // list of receivers
+        subject: "welcome ", // Subject line
+        text: "Hello ", // plain text body
+        html: " Thank you! you are logged in.", // html body
+    });
+
+    // verify connection configuration
+    transporter.verify(function (error, success) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log("Mailed!!");
+        }
+    });
+
+}
+
+//registering mail
+async function loggedInMail(email) {
+    // console.log(name)
+    let transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+            user: process.env.EMAIL, // generated ethereal user
+            pass: process.env.PASS, // generated ethereal password
+        },
+    });
+
+    // send mail with defined transport object
+    let info = await transporter.sendMail({
+        from: process.env.EMAIL, // sender address
+        to: email, // list of receivers
+        subject: "welcome ", // Subject line
+        text: "Hello ", // plain text body
+        html: " Thank you! For registering with us.", // html body
+    });
+
+    // verify connection configuration
+    transporter.verify(function (error, success) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log("Mailed!!");
+        }
+    });
+
+}
 module.exports=router
