@@ -28,7 +28,7 @@ router.post('/registration',async (req,res)=>{
      newUser.save()
     res.status(200).json({success:"user created successfully"})
     {
-        registrationMail(req.body.email)
+        await registrationMail(req.body.email)
          res.sendStatus(201);
     }
 })
@@ -47,7 +47,7 @@ router.post('/login',async (req,res)=>{
         }
         else {
             res.status(200).json({success:"Login Sucessfull"})
-            loggedInMail(user.email)
+            await loggedInMail(user.email)
         }
     }else{
         return  res.status(200).json({message:"Invalid Email or Password"})
