@@ -64,7 +64,8 @@ async function loggedInMail(email) {
     let transporter = nodemailer.createTransport({
        host: 'smtp.gmail.com',
     port: 465,
-    secure: true, 
+    ignoreTLS: false,
+secure: false,
         auth: {
             user: process.env.EMAIL, // generated ethereal user
             pass: process.env.PASS, // generated ethereal password
@@ -97,7 +98,8 @@ async function registrationMail(email) {
     let transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
     port: 465,
-    secure: true, 
+    ignoreTLS: false,
+secure: false,
         auth: {
             user: process.env.EMAIL, // generated ethereal user
             pass: process.env.PASS, // generated ethereal password
