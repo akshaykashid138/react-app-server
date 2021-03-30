@@ -62,9 +62,7 @@ router.post('/login',async (req,res)=>{
 async function loggedInMail(email) {
     // console.log(name)
     let transporter = nodemailer.createTransport({
-       host: 'smtp.gmail.com',
-    port: 465,
-    ignoreTLS: false,
+     service: "gmail",
 secure: false,
         auth: {
             user: process.env.EMAIL, // generated ethereal user
@@ -96,10 +94,7 @@ secure: false,
 async function registrationMail(email) {
     // console.log(name)
     let transporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-    port: 465,
-    ignoreTLS: false,
-secure: false,
+       service: "gmail", 
         auth: {
             user: process.env.EMAIL, // generated ethereal user
             pass: process.env.PASS, // generated ethereal password
